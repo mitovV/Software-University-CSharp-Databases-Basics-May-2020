@@ -1,0 +1,5 @@
+CREATE TABLE Teachers(
+	TeacherID INT PRIMARY KEY IDENTITY,
+	[Name] VARCHAR(50),
+	ManagerID INT FOREIGN KEY REFERENCES Teachers(TeacherID)
+)
