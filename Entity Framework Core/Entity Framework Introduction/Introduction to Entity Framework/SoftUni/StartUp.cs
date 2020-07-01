@@ -12,6 +12,7 @@
     {
         public static void Main()
         {
+            Console.WriteLine(RemoveTown(new SoftUniContext()));
         }
 
         public static string GetEmployeesFullInformation(SoftUniContext context)
@@ -331,6 +332,38 @@
             }
 
             return sb.ToString().TrimEnd();
+        }
+
+        public static string RemoveTown(SoftUniContext context)
+        {
+            var town = context
+                .Towns
+                .FirstOrDefault(t => t.Name == "Seattle");
+
+            var addresses = context
+                .Addresses
+                .Where(a => a.TownId == town.TownId)
+                .ToList();
+
+            var employees = context
+                .Employees
+                .Where(e => e.AddressId != null);
+
+            foreach (var employee in employees)
+            {
+                if (addresses.Any(a => a.AddressId == employee.AddressId))
+                {
+                    employee.AddressId = null;
+                }
+            }
+
+            context.Addresses.RemoveRange(addresses);
+
+            context.Towns.Remove(town);
+
+            context.SaveChanges();
+
+            return $"{addresses.Count()} addresses in Seattle were deleted";
         }
     }
 }
