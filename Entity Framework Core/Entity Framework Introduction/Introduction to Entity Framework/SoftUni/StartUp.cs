@@ -59,7 +59,7 @@
                 {
                     e.FirstName,
                     e.LastName,
-                    departmentName = e.Department.Name,
+                    DepartmentName = e.Department.Name,
                     e.Salary
                 })
                 .OrderBy(e => e.Salary)
@@ -68,7 +68,7 @@
 
             foreach (var employee in employees)
             {
-                sb.AppendLine($"{employee.FirstName} {employee.LastName} from {employee.departmentName} - ${employee.Salary:F2}");
+                sb.AppendLine($"{employee.FirstName} {employee.LastName} from {employee.DepartmentName} - ${employee.Salary:F2}");
             }
 
             return sb.ToString().TrimEnd();
