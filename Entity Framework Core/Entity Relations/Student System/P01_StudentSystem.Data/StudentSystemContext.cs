@@ -1,10 +1,10 @@
 ﻿namespace P01_StudentSystem.Data
 {
     using Microsoft.EntityFrameworkCore;
+    using System.Reflection;
 
     using Configurations;
     using Data.Models;
-    using System.Reflection;
 
     public class StudentSystemContext : DbContext
     {
