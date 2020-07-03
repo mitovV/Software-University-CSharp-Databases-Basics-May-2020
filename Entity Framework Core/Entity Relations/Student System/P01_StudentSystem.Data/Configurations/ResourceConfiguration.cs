@@ -4,6 +4,7 @@
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
     using Models;
+
     public class ResourceConfiguration : IEntityTypeConfiguration<Resource>
     {
         public void Configure(EntityTypeBuilder<Resource> resource)
