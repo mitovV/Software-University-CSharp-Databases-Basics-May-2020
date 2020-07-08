@@ -19,6 +19,8 @@
 
         public DbSet<Medicament> Medicaments { get; set; }
 
+        public DbSet<Doctor> Doctors { get; set; }
+
         public DbSet<Patient> Patients { get; set; }
 
         public DbSet<Visitation> Visitations { get; set; }
@@ -29,7 +31,7 @@
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=HospitalDatabase;Integrated Security=true;");
+                optionsBuilder.UseSqlServer(@"Server=CODINGMANIA\SQLEXPRESS;Database=HospitalDatabase;Integrated Security=true;");
             }
 
             base.OnConfiguring(optionsBuilder);
@@ -120,7 +122,7 @@
                 });
 
             modelBuilder
-                .Entity<Visitation>(entity => 
+                .Entity<Visitation>(entity =>
                 {
                     entity
                     .HasKey(v => v.VisitationId);
@@ -138,7 +140,30 @@
                     .HasOne(v => v.Patient)
                     .WithMany(p => p.Visitations)
                     .HasForeignKey(v => v.PatientId);
+
+                    entity
+                    .HasOne(v => v.Doctor)
+                    .WithMany(d => d.Visitations)
+                    .HasForeignKey(v => v.DoctorId);
                 });
+
+            modelBuilder.Entity<Doctor>(entity =>
+            {
+                entity
+                .HasKey(d => d.DoctorId);
+
+                entity
+                .Property(d => d.Name)
+                .IsRequired()
+                .HasMaxLength(100)
+                .IsUnicode();
+
+                entity
+                .Property(d => d.Specialty)
+                .IsRequired()
+                .HasMaxLength(100)
+                .IsUnicode();
+            });
         }
     }
 }
