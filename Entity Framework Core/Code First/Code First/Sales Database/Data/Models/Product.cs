@@ -8,11 +8,12 @@
 
         public string Name { get; set; }
 
+        public string Description { get; set; }
+
         public double Quantity { get; set; }
 
         public decimal Price { get; set; }
 
-        public virtual ICollection<Sale> Sales { get; set; }
-            = new HashSet<Sale>();
+        public ICollection<Sale> Sales { get; set; }
     }
 }

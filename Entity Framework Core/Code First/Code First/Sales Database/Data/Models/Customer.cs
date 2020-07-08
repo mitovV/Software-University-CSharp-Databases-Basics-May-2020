@@ -12,7 +12,6 @@
 
         public string CreditCardNumber { get; set; }
 
-        public virtual ICollection<Sale> Sales { get; set; }
-            = new HashSet<Sale>();
+        public ICollection<Sale> Sales { get; set; }
     }
 }

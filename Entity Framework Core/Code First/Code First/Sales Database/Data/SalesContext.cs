@@ -6,7 +6,7 @@
 
     public class SalesContext : DbContext
     {
-        protected SalesContext()
+        public SalesContext()
         {
         }
 
@@ -27,7 +27,7 @@
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=SalesDB;Integrated Security=true;");
+                optionsBuilder.UseSqlServer(@"Server=CODINGMANIA\SQLEXPRESS;Database=SalesDB;Integrated Security=true;");
             }
 
             base.OnConfiguring(optionsBuilder);
@@ -45,6 +45,12 @@
                 .HasMaxLength(50)
                 .IsRequired()
                 .IsUnicode();
+
+                entity
+                .Property(p => p.Description)
+                .HasMaxLength(250)
+                .IsUnicode(true)
+                .HasDefaultValue("No description");
 
                 entity
                 .Property(p => p.Quantity)
@@ -96,7 +102,8 @@
                 entity
                 .Property(s => s.Date)
                 .IsRequired()
-                .HasColumnType("DATETIME2");
+                .HasColumnType("DATETIME2")
+                .HasDefaultValueSql("GETDATE()");
 
                 entity
                 .HasOne(s => s.Product)
