@@ -8,6 +8,7 @@
 
         public string Name { get; set; }
 
-        public ICollection<Sale> Sales { get; set; }
+        public virtual ICollection<Sale> Sales { get; set; }
+            = new HashSet<Sale>();
     }
 }

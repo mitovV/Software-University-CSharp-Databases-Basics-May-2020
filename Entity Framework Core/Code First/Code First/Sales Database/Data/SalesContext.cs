@@ -27,7 +27,7 @@
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(@"Server=CODINGMANIA\SQLEXPRESS;Database=SalesDB;Integrated Security=true;");
+                optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=SalesDB;Integrated Security=true;");
             }
 
             base.OnConfiguring(optionsBuilder);
