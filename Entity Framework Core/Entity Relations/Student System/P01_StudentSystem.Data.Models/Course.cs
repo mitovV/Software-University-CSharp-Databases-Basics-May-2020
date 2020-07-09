@@ -17,12 +17,12 @@
 
         public decimal Price { get; set; }
 
-        public ICollection<StudentCourse> Students { get; set; }
+        public virtual ICollection<StudentCourse> Students { get; set; }
 
-        public ICollection<StudentCourse> StudentsEnrolled { get; set; }
+        public virtual ICollection<StudentCourse> StudentsEnrolled { get; set; }
 
-        public ICollection<Resource> Resources { get; set; }
+        public virtual ICollection<Resource> Resources { get; set; }
 
-        public ICollection<Homework> HomeworkSubmissions { get; set; }
+        public virtual ICollection<Homework> HomeworkSubmissions { get; set; }
     }
 }

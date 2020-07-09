@@ -15,11 +15,11 @@
 
         public DateTime? Birthday { get; set; }
 
-        public ICollection<StudentCourse> Courses { get; set; }
+        public virtual ICollection<StudentCourse> Courses { get; set; }
 
-        public ICollection<StudentCourse> CourseEnrollments { get; set; }
+        public virtual ICollection<StudentCourse> CourseEnrollments { get; set; }
 
 
-        public ICollection<Homework> HomeworkSubmissions { get; set; }
+        public virtual ICollection<Homework> HomeworkSubmissions { get; set; }
     }
 }
