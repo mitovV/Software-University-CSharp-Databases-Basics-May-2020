@@ -12,14 +12,14 @@
 
         public int TeamId { get; set; }
 
-        public Team Team { get; set; }
+        public virtual Team Team { get; set; }
 
         public int PositionId { get; set; }
 
-        public Position Position { get; set; }
+        public virtual Position Position { get; set; }
 
         public bool IsInjured { get; set; }
 
-        public ICollection<PlayerStatistic> PlayerStatistics { get; set; }
+        public virtual ICollection<PlayerStatistic> PlayerStatistics { get; set; }
     }
 }
