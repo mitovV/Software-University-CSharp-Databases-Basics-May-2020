@@ -5,6 +5,7 @@
 
     using Data;
     using Initializer;
+    using Models.Enums;
 
     public class StartUp
     {
@@ -23,6 +24,18 @@
                 .Where(b => b.AgeRestriction.ToString().ToLower() == command)
                 .Select(b => b.Title)
                 .OrderBy(b => b)
+                .ToArray();
+
+            return String.Join(Environment.NewLine, titles);
+        }
+
+        public static string GetGoldenBooks(BookShopContext context)
+        {
+            var titles = context
+                .Books
+                .Where(b => b.EditionType == EditionType.Gold && b.Copies < 5000)
+                .OrderBy(b => b.BookId)
+                .Select(b => b.Title)
                 .ToArray();
 
             return String.Join(Environment.NewLine, titles);
