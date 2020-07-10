@@ -1,17 +1,18 @@
 ﻿namespace BookShop.Data
 {
-    using Microsoft.EntityFrameworkCore;
+    using System.Reflection;
 
     using Models;
-    using EntityConfiguration;
+
+    using Microsoft.EntityFrameworkCore;
 
     public class BookShopContext : DbContext
     {
-		public BookShopContext() { }
+        public BookShopContext() { }
 
-		public BookShopContext(DbContextOptions options)
-			:base(options) { }
-		
+        public BookShopContext(DbContextOptions options)
+            : base(options) { }
+
         public DbSet<Book> Books { get; set; }
 
         public DbSet<Category> Categories { get; set; }
@@ -29,11 +30,6 @@
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfiguration(new AuthorConfiguration());
-            modelBuilder.ApplyConfiguration(new BookCategoryConfiguration());
-            modelBuilder.ApplyConfiguration(new BookConfiguration());
-            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
-        }
+         => modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 }
