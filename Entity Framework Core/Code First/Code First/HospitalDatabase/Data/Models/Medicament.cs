@@ -8,6 +8,7 @@
 
         public string Name { get; set; }
 
-        public ICollection<PatientMedicament> Prescriptions { get; set; }
+        public virtual ICollection<PatientMedicament> Prescriptions { get; set; }
+            = new HashSet<PatientMedicament>();
     }
 }

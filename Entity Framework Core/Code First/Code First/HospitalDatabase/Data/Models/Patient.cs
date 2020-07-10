@@ -16,10 +16,13 @@
 
         public bool HasInsurance { get; set; }
 
-        public ICollection<PatientMedicament> Prescriptions { get; set; }
+        public virtual ICollection<PatientMedicament> Prescriptions { get; set; }
+            = new HashSet<PatientMedicament>();
 
-        public ICollection<Diagnose> Diagnoses { get; set; }
+        public virtual ICollection<Diagnose> Diagnoses { get; set; }
+            = new HashSet<Diagnose>();
 
-        public ICollection<Visitation> Visitations { get; set; }
+        public virtual ICollection<Visitation> Visitations { get; set; }
+            = new HashSet<Visitation>();
     }
 }
