@@ -4,6 +4,7 @@
     using ViewModels.Positions;
 
     using AutoMapper;
+    using FastFood.Core.ViewModels.Employees;
 
     public class FastFoodProfile : Profile
     {
@@ -15,6 +16,10 @@
 
             this.CreateMap<Position, PositionsAllViewModel>()
                 .ForMember(x => x.Name, y => y.MapFrom(s => s.Name));
+
+            //Employees
+            this.CreateMap<Position, RegisterEmployeeViewModel>()
+                .ForMember(x => x.PositionId, y => y.MapFrom(x => x.Id));
         }
     }
 }

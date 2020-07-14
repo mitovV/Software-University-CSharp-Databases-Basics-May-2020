@@ -7,6 +7,8 @@
 
     using AutoMapper;
     using Microsoft.AspNetCore.Mvc;
+    using AutoMapper.QueryableExtensions;
+    using System.Linq;
 
     public class EmployeesController : Controller
     {
@@ -21,7 +23,12 @@
 
         public IActionResult Register()
         {
-            throw new NotImplementedException();
+            var positions = this.context
+                .Positions
+                .ProjectTo<RegisterEmployeeViewModel>(this.mapper.ConfigurationProvider)
+                .ToList();
+
+            return this.View(positions);
         }
 
         [HttpPost]
