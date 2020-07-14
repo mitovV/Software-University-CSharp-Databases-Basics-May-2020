@@ -2,10 +2,12 @@
 {
     using System;
     using System.Linq;
-    using AutoMapper;
+
     using Data;
-    using Microsoft.AspNetCore.Mvc;
     using ViewModels.Orders;
+
+    using AutoMapper;
+    using Microsoft.AspNetCore.Mvc;
 
     public class OrdersController : Controller
     {

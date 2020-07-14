@@ -2,11 +2,13 @@
 {
     using System;
     using System.Linq;
+
+    using Data;
+    using ViewModels.Items;
+
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
-    using Data;
     using Microsoft.AspNetCore.Mvc;
-    using ViewModels.Items;
 
     public class ItemsController : Controller
     {
