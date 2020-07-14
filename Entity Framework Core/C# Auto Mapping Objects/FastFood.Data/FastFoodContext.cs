@@ -1,7 +1,8 @@
 ﻿namespace FastFood.Data
 {
-    using Microsoft.EntityFrameworkCore;
     using Models;
+
+    using Microsoft.EntityFrameworkCore;
 
     public class FastFoodContext : DbContext
     {
