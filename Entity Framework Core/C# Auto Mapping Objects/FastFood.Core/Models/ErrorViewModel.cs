@@ -1,5 +1,3 @@
-using System;
-
 namespace FastFood.Core.Models
 {
     public class ErrorViewModel

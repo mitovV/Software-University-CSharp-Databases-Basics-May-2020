@@ -1,9 +1,9 @@
 ﻿namespace FastFood.Core.Controllers
 {
-    using System;
     using System.Linq;
 
     using Data;
+    using FastFood.Models;
     using ViewModels.Items;
 
     using AutoMapper;
@@ -33,12 +33,26 @@
         [HttpPost]
         public IActionResult Create(CreateItemInputModel model)
         {
-            throw new NotImplementedException();
+            if (!ModelState.IsValid)
+            {
+                return this.RedirectToAction("Error", "Home");
+            }
+
+            var item = this.mapper.Map<Item>(model);
+
+            this.context.Items.Add(item);
+            this.context.SaveChanges();
+
+            return this.RedirectToAction(nameof(All));
         }
 
         public IActionResult All()
         {
-            throw new NotImplementedException();
+            var items = this.context.Items
+                .ProjectTo<ItemsAllViewModels>(this.mapper.ConfigurationProvider)
+                .ToList();
+
+            return this.View(items);
         }
     }
 }

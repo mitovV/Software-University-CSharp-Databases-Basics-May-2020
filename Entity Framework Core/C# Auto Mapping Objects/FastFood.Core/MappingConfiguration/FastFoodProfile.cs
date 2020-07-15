@@ -37,6 +37,11 @@
             //Items
             this.CreateMap<Category, CreateItemViewModel>()
                 .ForMember(x => x.CategoryId, y => y.MapFrom(x => x.Id));
+
+            this.CreateMap<CreateItemInputModel, Item>();
+
+            this.CreateMap<Item, ItemsAllViewModels>()
+                .ForMember(x => x.Category, y => y.MapFrom(x => x.Category.Name));
         }
     }
 }
