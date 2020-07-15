@@ -7,6 +7,9 @@
 
     using AutoMapper;
     using FastFood.Core.ViewModels.Items;
+    using FastFood.Core.ViewModels.Orders;
+    using System;
+    using System.Globalization;
 
     public class FastFoodProfile : Profile
     {
@@ -42,6 +45,22 @@
 
             this.CreateMap<Item, ItemsAllViewModels>()
                 .ForMember(x => x.Category, y => y.MapFrom(x => x.Category.Name));
+
+            //Orders
+            this.CreateMap<Item, ItemOrderViewModel>();
+
+            this.CreateMap<Employee, EmployeeOrderViewModel>();
+
+            this.CreateMap<CreateOrderInputModel, Order>()
+                .ForMember(x => x.DateTime, y => y.MapFrom(x => DateTime.UtcNow));
+
+            this.CreateMap<CreateOrderInputModel, OrderItem>()
+                .ForMember(x => x.ItemId, y => y.MapFrom(x => x.ItemId));
+
+            this.CreateMap<Order, OrderAllViewModel>()
+                .ForMember(x => x.DateTime, y => y.MapFrom(x => x.DateTime.ToString("D", CultureInfo.InvariantCulture)))
+                .ForMember(x => x.Employee, y => y.MapFrom(x => x.Employee.Name))
+                .ForMember(x => x.OrderId, y => y.MapFrom(x => x.Id));
         }
     }
 }
