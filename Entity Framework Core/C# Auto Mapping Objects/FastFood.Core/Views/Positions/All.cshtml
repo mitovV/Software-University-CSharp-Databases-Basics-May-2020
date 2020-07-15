@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "All Positions";
 }
-    <h1 class="text-center">All Positions</h1>
+<h1 class="text-center">All Positions</h1>
 <hr class="hr-2" />
 <table class="table mx-auto">
     <thead>
@@ -13,12 +13,13 @@
         </tr>
     </thead>
     <tbody>
-        @for(var i = 0; i < Model.Count(); i++)
-    {
-        <tr class="row">
-            <th class="col-md-1">@(i + 1)</th>
-            <td class="col-md-2">@Model[i].Name</td>
-        </tr>
-    }
+        @for (var i = 0; i < Model.Count(); i++)
+        {
+            var backGround = i % 2 != 0 ? "rgb(217, 217, 217)" : "";
+            <tr class="row" style="background-color: @backGround">
+                <th class="col-md-1">@(i + 1)</th>
+                <td class="col-md-2">@Model[i].Name</td>
+            </tr>
+        }
     </tbody>
 </table>
