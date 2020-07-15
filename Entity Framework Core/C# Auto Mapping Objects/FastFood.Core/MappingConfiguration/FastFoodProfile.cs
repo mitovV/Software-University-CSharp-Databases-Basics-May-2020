@@ -20,6 +20,9 @@
             //Employees
             this.CreateMap<Position, RegisterEmployeeViewModel>()
                 .ForMember(x => x.PositionId, y => y.MapFrom(x => x.Id));
+
+            this.CreateMap<RegisterEmployeeInputModel, Employee>();
+
         }
     }
 }

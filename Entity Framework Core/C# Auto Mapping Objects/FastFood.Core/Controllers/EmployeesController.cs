@@ -9,6 +9,7 @@
     using Microsoft.AspNetCore.Mvc;
     using AutoMapper.QueryableExtensions;
     using System.Linq;
+    using FastFood.Models;
 
     public class EmployeesController : Controller
     {
@@ -34,7 +35,17 @@
         [HttpPost]
         public IActionResult Register(RegisterEmployeeInputModel model)
         {
-            throw new NotImplementedException();
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
+            var employee = this.mapper.Map<Employee>(model);
+
+            this.context.Employees.Add(employee);
+            this.context.SaveChanges();
+
+            return RedirectToAction("All");
         }
 
         public IActionResult All()
