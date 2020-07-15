@@ -50,7 +50,12 @@
 
         public IActionResult All()
         {
-            throw new NotImplementedException();
+            var employees = this.context
+                .Employees
+                .ProjectTo<EmployeesAllViewModel>(this.mapper.ConfigurationProvider)
+                .ToList();
+
+            return this.View(employees);
         }
     }
 }
