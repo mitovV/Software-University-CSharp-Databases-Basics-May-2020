@@ -1,10 +1,11 @@
 ﻿namespace FastFood.Core.MappingConfiguration
 {
     using FastFood.Models;
+    using ViewModels.Categories;
+    using ViewModels.Employees;
     using ViewModels.Positions;
 
     using AutoMapper;
-    using FastFood.Core.ViewModels.Employees;
 
     public class FastFoodProfile : Profile
     {
@@ -26,6 +27,11 @@
             this.CreateMap<Employee, EmployeesAllViewModel>()
                 .ForMember(x => x.Position, y => y.MapFrom(x => x.Position.Name));
 
+            //Categories
+            this.CreateMap<CreateCategoryInputModel, Category>()
+                .ForMember(x => x.Name, y => y.MapFrom(x => x.CategoryName));
+
+            this.CreateMap<Category, CategoryAllViewModel>();
         }
     }
 }

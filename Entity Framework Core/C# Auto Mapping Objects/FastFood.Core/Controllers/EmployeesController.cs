@@ -1,15 +1,14 @@
 ﻿namespace FastFood.Core.Controllers
 {
-    using System;
+    using System.Linq;
 
     using Data;
+    using FastFood.Models;
     using ViewModels.Employees;
 
     using AutoMapper;
-    using Microsoft.AspNetCore.Mvc;
     using AutoMapper.QueryableExtensions;
-    using System.Linq;
-    using FastFood.Models;
+    using Microsoft.AspNetCore.Mvc;
 
     public class EmployeesController : Controller
     {
@@ -45,7 +44,7 @@
             this.context.Employees.Add(employee);
             this.context.SaveChanges();
 
-            return RedirectToAction("All");
+            return RedirectToAction(nameof(All));
         }
 
         public IActionResult All()
