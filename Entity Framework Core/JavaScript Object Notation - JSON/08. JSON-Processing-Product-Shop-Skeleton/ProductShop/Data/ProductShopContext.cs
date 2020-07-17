@@ -1,6 +1,5 @@
 ﻿namespace ProductShop.Data
 {
-    using JetBrains.Annotations;
     using Microsoft.EntityFrameworkCore;
 
     using Models;

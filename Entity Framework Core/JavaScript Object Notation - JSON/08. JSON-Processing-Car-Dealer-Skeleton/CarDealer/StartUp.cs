@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using AutoMapper;
-using CarDealer.Data;
-using CarDealer.Models;
-using Newtonsoft.Json;
-
-namespace CarDealer
+﻿namespace CarDealer
 {
     public class StartUp
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
         }
     }

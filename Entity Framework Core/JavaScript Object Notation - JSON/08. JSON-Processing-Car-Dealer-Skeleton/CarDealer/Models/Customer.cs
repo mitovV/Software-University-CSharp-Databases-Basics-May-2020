@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CarDealer.Models
+﻿namespace CarDealer.Models
 {
+    using System;
+    using System.Collections.Generic;
+
     public class Customer
     {
         public int Id { get; set; }
