@@ -8,7 +8,6 @@
     {
         public FastFoodContext()
         {
-
         }
 
         public FastFoodContext(DbContextOptions<FastFoodContext> options)
