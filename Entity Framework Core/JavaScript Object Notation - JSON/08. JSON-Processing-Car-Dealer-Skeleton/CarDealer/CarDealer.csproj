@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTO\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Datasets\cars.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
