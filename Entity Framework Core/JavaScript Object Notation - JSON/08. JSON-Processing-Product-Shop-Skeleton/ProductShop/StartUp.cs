@@ -46,5 +46,31 @@
 
             return $"Successfully imported {products.Length}";
         }
+
+        public static string ImportCategoryProducts(ProductShopContext context, string inputJson)
+        {
+            var categoryProducts = JsonConvert.DeserializeObject<CategoryProduct[]>(inputJson);
+
+            context.AddRange(categoryProducts);
+            context.SaveChanges();
+
+            return $"Successfully imported {categoryProducts.Length}";
+        }
+
+        public static string GetProductsInRange(ProductShopContext context)
+        {
+            var products = context
+                .Products
+                .Where(p => p.Price > 500 && p.Price <= 1000)
+                .Select(p => new
+                {
+                    p.Name,
+                    p.Price,
+                    Seller = $"{p.Seller.FirstName} {p.Seller.LastName}"
+                })
+                .OrderBy(p => p.Price);
+
+            return JsonConvert.SerializeObject(products, Formatting.Indented);
+        }
     }
 }
