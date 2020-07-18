@@ -17,7 +17,7 @@
         {
             var suppliers = JsonConvert.DeserializeObject<Supplier[]>(inputJson);
 
-            context.AddRange(suppliers);
+            context.Suppliers.AddRange(suppliers);
             context.SaveChanges();
 
             return $"Successfully imported {suppliers.Length}.";
@@ -30,7 +30,7 @@
                 .Where(p => context.Suppliers.Any(s => s.Id == p.SupplierId))
                 .ToArray();
 
-            context.AddRange(parts);
+            context.Parts.AddRange(parts);
             context.SaveChanges();
 
             return $"Successfully imported {parts.Length}.";
@@ -49,7 +49,7 @@
                     TravelledDistance = car.TravelledDistance
                 };
 
-                context.Add(newCar);
+                context.Cars.Add(newCar);
 
                 foreach (var partId in car.PartsId)
                 {
@@ -75,7 +75,7 @@
         {
             var customers = JsonConvert.DeserializeObject<Customer[]>(inputJson);
 
-            context.AddRange(customers);
+            context.Customers.AddRange(customers);
             context.SaveChanges();
 
             return $"Successfully imported {customers.Length}.";
@@ -85,7 +85,7 @@
         {
             var sales = JsonConvert.DeserializeObject<Sale[]>(inputJson);
 
-            context.AddRange(sales);
+            context.Sales.AddRange(sales);
             context.SaveChanges();
 
             return $"Successfully imported {sales.Length}.";
