@@ -123,6 +123,7 @@
         {
             var users = context
                 .Users
+                .AsEnumerable()
                 .Where(u => u.ProductsSold.Any(p => p.Buyer != null))
                 .OrderByDescending(u => u.ProductsSold.Count(p => p.Buyer != null))
                 .Select(u => new
