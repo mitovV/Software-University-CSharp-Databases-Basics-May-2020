@@ -1,7 +1,5 @@
 ﻿namespace ProductShop
 {
-    using System;
-    using System.IO;
     using System.Linq;
 
     using Data;
@@ -13,6 +11,8 @@
     {
         public static void Main()
         {
+            var db = new ProductShopContext();
+            System.Console.WriteLine(GetUsersWithProducts(db));
         }
 
         public static string ImportUsers(ProductShopContext context, string inputJson)
@@ -64,11 +64,11 @@
                 .Where(p => p.Price > 500 && p.Price <= 1000)
                 .Select(p => new
                 {
-                    p.Name,
-                    p.Price,
-                    Seller = $"{p.Seller.FirstName} {p.Seller.LastName}"
+                    name = p.Name,
+                    price = p.Price,
+                    seller = $"{p.Seller.FirstName} {p.Seller.LastName}"
                 })
-                .OrderBy(p => p.Price);
+                .OrderBy(p => p.price);
 
             return JsonConvert.SerializeObject(products, Formatting.Indented);
         }
