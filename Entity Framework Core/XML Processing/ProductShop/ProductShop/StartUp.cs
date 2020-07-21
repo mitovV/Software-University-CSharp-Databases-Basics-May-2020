@@ -19,6 +19,9 @@
 
         public static void Main()
         {
+            var db = new ProductShopContext();
+
+            System.Console.WriteLine(GetUsersWithProducts(db));
         }
 
         public static string ImportUsers(ProductShopContext context, string inputXml)
@@ -179,6 +182,39 @@
             using (var writer = new StringWriter(sb))
             {
                 serializer.Serialize(writer, categories, namespaces);
+            }
+
+            return sb.ToString().Trim();
+        }
+
+        public static string GetUsersWithProducts(ProductShopContext context)
+        {
+            ConfigureMapper();
+
+            var users = context
+                .Users
+                .Where(u => u.ProductsSold.Any())
+                .OrderByDescending(u => u.ProductsSold.Count())
+                .ProjectTo<ExportUserWithProductDto>(mapper.ConfigurationProvider)
+                .Take(10)
+                .ToArray();
+
+            var result = new ExportUsersAndProductsDto
+            {
+                Count = context.Users.Count(p => p.ProductsSold.Any()),
+                Users = users
+            };
+
+            var sb = new StringBuilder();
+
+            var serializer = new XmlSerializer(typeof(ExportUsersAndProductsDto), new XmlRootAttribute("Users"));
+
+            var namespaces = new XmlSerializerNamespaces();
+            namespaces.Add("", "");
+
+            using (var writer = new StringWriter(sb))
+            {
+                serializer.Serialize(writer, result, namespaces);
             }
 
             return sb.ToString().Trim();

@@ -7,7 +7,6 @@
     using Models;
 
     using AutoMapper;
-    using System.Security.Cryptography.X509Certificates;
 
     public class ProductShopProfile : Profile
     {
@@ -33,6 +32,14 @@
                 .ForMember(x => x.Count, y => y.MapFrom(x => x.CategoryProducts.Count))
                 .ForMember(x => x.AveragePrice, y => y.MapFrom(x => x.CategoryProducts.Average(cp => cp.Product.Price)))
                 .ForMember(x => x.TotalRevenue, y => y.MapFrom(x => x.CategoryProducts.Sum(cp => cp.Product.Price)));
+
+            this.CreateMap<User, ExportSoldProductsCountDto>()
+                .ForMember(x => x.Count, y => y.MapFrom(x => x.ProductsSold.Count))
+                .ForMember(x => x.Products, y => y.MapFrom(x => x.ProductsSold));
+
+
+            this.CreateMap<User, ExportUserWithProductDto>()
+                .ForMember(x => x.SoldProducts, y => y.MapFrom(x => x));
         }
     }
 }
