@@ -1,6 +1,7 @@
 ﻿namespace CarDealer
 {
     using System.IO;
+    using System.Linq;
     using System.Xml.Serialization;
 
     using Data;
@@ -35,6 +36,29 @@
             context.SaveChanges();
 
             return $"Successfully imported {suppliers.Length}";
+        }
+
+        public static string ImportParts(CarDealerContext context, string inputXml)
+        {
+            ConfigureMapper();
+
+            var serializer = new XmlSerializer(typeof(ImportPartDto[]), new XmlRootAttribute("Parts"));
+
+            ImportPartDto[] partDtos;
+
+            using (var reader = new StringReader(inputXml))
+            {
+                partDtos = ((ImportPartDto[])serializer.Deserialize(reader))
+                    .Where(p => context.Suppliers.Any(s => s.Id == p.SupplierId))
+                    .ToArray();
+            }
+
+            var parts = mapper.Map<Part[]>(partDtos);
+
+            context.Parts.AddRange(parts);
+            context.SaveChanges();
+
+            return $"Successfully imported {parts.Length}";
         }
 
         private static void ConfigureMapper()
