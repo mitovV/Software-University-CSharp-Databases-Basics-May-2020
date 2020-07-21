@@ -16,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\Export\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="Datasets\categories-products.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
