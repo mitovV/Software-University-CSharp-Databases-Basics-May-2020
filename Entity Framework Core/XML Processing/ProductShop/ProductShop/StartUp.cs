@@ -18,7 +18,7 @@
         private static IMapper mapper;
 
         public static void Main()
-        {        
+        {
         }
 
         public static string ImportUsers(ProductShopContext context, string inputXml)
@@ -126,6 +126,34 @@
             using (var writer = new StringWriter(sb))
             {
                 serializer.Serialize(writer, productsDto, namespaces);
+            }
+
+            return sb.ToString().TrimEnd();
+        }
+
+        public static string GetSoldProducts(ProductShopContext context)
+        {
+            ConfigureMapper();
+
+            var users = context
+                .Users
+                .Where(u => u.ProductsSold.Any(p => p.Buyer != null))
+                .OrderBy(u => u.LastName)
+                .ThenBy(u => u.FirstName)
+                .Take(5)
+                .ProjectTo<ExportSoldProductDto>(mapper.ConfigurationProvider)
+                .ToArray();
+
+            var sb = new StringBuilder();
+
+            var serializer = new XmlSerializer(typeof(ExportSoldProductDto[]), new XmlRootAttribute("Users"));
+
+            var namespaces = new XmlSerializerNamespaces();
+            namespaces.Add("", "");
+
+            using (var writer = new StringWriter(sb))
+            {
+                serializer.Serialize(writer, users, namespaces);
             }
 
             return sb.ToString().TrimEnd();

@@ -16,6 +16,10 @@
             this.CreateMap<ImportCategoryProductDto, CategoryProduct>();
             this.CreateMap<Product, ExportProductInRangeDto>()
                 .ForMember(x => x.Buyer, y => y.MapFrom(x => x.Buyer.FirstName + " " + x.Buyer.LastName));
+
+            this.CreateMap<Product, ExportProductDto>();
+            this.CreateMap<User, ExportSoldProductDto>()
+                .ForMember(x => x.Products, y => y.MapFrom(x => x.ProductsSold));
         }
     }
 }
