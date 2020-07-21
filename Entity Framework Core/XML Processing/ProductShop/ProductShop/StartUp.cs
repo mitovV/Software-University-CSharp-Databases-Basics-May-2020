@@ -159,6 +159,31 @@
             return sb.ToString().TrimEnd();
         }
 
+        public static string GetCategoriesByProductsCount(ProductShopContext context)
+        {
+            ConfigureMapper();
+
+            var categories = context
+                .Categories
+                .ProjectTo<ExportCategorieDto>(mapper.ConfigurationProvider)
+                .OrderByDescending(c => c.Count)
+                .ThenBy(c => c.TotalRevenue)
+                .ToArray();
+
+            var sb = new StringBuilder();
+
+            var serializer = new XmlSerializer(typeof(ExportCategorieDto[]), new XmlRootAttribute("Categories"));
+            var namespaces = new XmlSerializerNamespaces();
+            namespaces.Add("", "");
+
+            using (var writer = new StringWriter(sb))
+            {
+                serializer.Serialize(writer, categories, namespaces);
+            }
+
+            return sb.ToString().Trim();
+        }
+
         private static void ConfigureMapper()
         {
             var config = new MapperConfiguration(cfg =>

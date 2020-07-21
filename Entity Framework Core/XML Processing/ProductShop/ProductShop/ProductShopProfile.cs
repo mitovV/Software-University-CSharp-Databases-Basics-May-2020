@@ -1,5 +1,7 @@
 ﻿namespace ProductShop
 {
+    using System.Linq;
+
     using Dtos.Export;
     using Dtos.Import;
     using Models;
@@ -20,6 +22,11 @@
             this.CreateMap<Product, ExportProductDto>();
             this.CreateMap<User, ExportSoldProductDto>()
                 .ForMember(x => x.Products, y => y.MapFrom(x => x.ProductsSold));
+
+            this.CreateMap<Category, ExportCategorieDto>()
+                .ForMember(x => x.Count, y => y.MapFrom(x => x.CategoryProducts.Count))
+                .ForMember(x => x.AveragePrice, y => y.MapFrom(x => x.CategoryProducts.Average(cp => cp.Product.Price)))
+                .ForMember(x => x.TotalRevenue, y => y.MapFrom(x => x.CategoryProducts.Sum(cp => cp.Product.Price)));
         }
     }
 }
