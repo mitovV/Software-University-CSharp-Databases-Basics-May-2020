@@ -14,6 +14,8 @@
             this.CreateMap<ImportPartDto, Part>();
 
             this.CreateMap<ImportCustomerDto, Customer>();
+
+            this.CreateMap<ImportSaleDto, Sale>();
         }
     }
 }
