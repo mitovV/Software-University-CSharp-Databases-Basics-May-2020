@@ -1,5 +1,6 @@
 ﻿namespace CarDealer
 {
+    using Dtos.Import;
     using Models;
 
     using AutoMapper;
