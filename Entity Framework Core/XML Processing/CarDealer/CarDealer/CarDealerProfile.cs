@@ -19,6 +19,8 @@
             this.CreateMap<ImportSaleDto, Sale>();
 
             this.CreateMap<Car, ExportCarDto>();
+
+            this.CreateMap<Car, ExportCarFromMakeBmwDto>();
         }
     }
 }

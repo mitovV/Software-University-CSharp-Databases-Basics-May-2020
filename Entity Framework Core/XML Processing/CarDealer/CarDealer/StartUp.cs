@@ -66,7 +66,7 @@
             return $"Successfully imported {parts.Length}";
         }
 
-         public static string ImportCars(CarDealerContext context, string inputXml)
+        public static string ImportCars(CarDealerContext context, string inputXml)
         {
             var serializer = new XmlSerializer(typeof(ImportCarDto[]), new XmlRootAttribute("Cars"));
 
@@ -182,6 +182,33 @@
 
             using (var writer = new StringWriter(sb))
             {
+                serializer.Serialize(writer, cars, namespaces);
+            }
+
+            return sb.ToString().Trim();
+        }
+
+        public static string GetCarsFromMakeBmw(CarDealerContext context)
+        {
+            ConfigureMapper();
+
+            var cars = context
+                .Cars
+                .Where(c => c.Make == "BMW")
+                .OrderBy(c => c.Model)
+                .ThenByDescending(c => c.TravelledDistance)
+                .ProjectTo<ExportCarFromMakeBmwDto>(mapper.ConfigurationProvider)
+                .ToArray();
+
+            var serializer = new XmlSerializer(typeof(ExportCarFromMakeBmwDto[]), new XmlRootAttribute("cars"));
+
+            var sb = new StringBuilder();
+
+            using (var writer = new StringWriter(sb))
+            {
+                var namespaces = new XmlSerializerNamespaces();
+                namespaces.Add("", "");
+
                 serializer.Serialize(writer, cars, namespaces);
             }
 
