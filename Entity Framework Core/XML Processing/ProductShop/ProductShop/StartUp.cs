@@ -80,6 +80,27 @@
             return $"Successfully imported {categories.Length}";
         }
 
+        public static string ImportCategoryProducts(ProductShopContext context, string inputXml)
+        {
+            ConfigureMapper();
+
+            var serializer = new XmlSerializer(typeof(ImportCategoryProductDto[]), new XmlRootAttribute("CategoryProducts"));
+
+            ImportCategoryProductDto[] importCategoryProductDtos;
+
+            using (var reader = new StringReader(inputXml))
+            {
+                importCategoryProductDtos = (ImportCategoryProductDto[])serializer.Deserialize(reader);
+            }
+
+            var categoryProducts = mapper.Map<CategoryProduct[]>(importCategoryProductDtos);
+
+            context.CategoryProducts.AddRange(categoryProducts);
+            context.SaveChanges();
+
+            return $"Successfully imported {categoryProducts.Length}";
+        }
+
         private static void ConfigureMapper()
         {
             var config = new MapperConfiguration(cfg =>
