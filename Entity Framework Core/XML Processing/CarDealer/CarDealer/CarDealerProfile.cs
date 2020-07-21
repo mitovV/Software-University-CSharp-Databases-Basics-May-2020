@@ -1,5 +1,6 @@
 ﻿namespace CarDealer
 {
+    using Dtos.Export;
     using Dtos.Import;
     using Models;
 
@@ -16,6 +17,8 @@
             this.CreateMap<ImportCustomerDto, Customer>();
 
             this.CreateMap<ImportSaleDto, Sale>();
+
+            this.CreateMap<Car, ExportCarDto>();
         }
     }
 }

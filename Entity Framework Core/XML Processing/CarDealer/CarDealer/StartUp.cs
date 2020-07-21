@@ -3,13 +3,16 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Text;
     using System.Xml.Serialization;
 
     using Data;
+    using Dtos.Export;
     using Dtos.Import;
     using Models;
 
     using AutoMapper;
+    using AutoMapper.QueryableExtensions;
 
     public class StartUp
     {
@@ -155,6 +158,34 @@
             context.SaveChanges();
 
             return $"Successfully imported {sales.Length}";
+        }
+
+        public static string GetCarsWithDistance(CarDealerContext context)
+        {
+            ConfigureMapper();
+
+            var cars = context
+                .Cars
+                .Where(c => c.TravelledDistance > 2000000)
+                .OrderBy(c => c.Make)
+                .ThenBy(c => c.Model)
+                .Take(10)
+                .ProjectTo<ExportCarDto>(mapper.ConfigurationProvider)
+                .ToArray();
+
+            var serializer = new XmlSerializer(typeof(ExportCarDto[]), new XmlRootAttribute("cars"));
+
+            var sb = new StringBuilder();
+
+            var namespaces = new XmlSerializerNamespaces();
+            namespaces.Add("", "");
+
+            using (var writer = new StringWriter(sb))
+            {
+                serializer.Serialize(writer, cars, namespaces);
+            }
+
+            return sb.ToString().Trim();
         }
 
         private static void ConfigureMapper()
