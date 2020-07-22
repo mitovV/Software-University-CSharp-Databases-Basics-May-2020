@@ -13,6 +13,7 @@
 
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
+    using Microsoft.EntityFrameworkCore;
 
     public class StartUp
     {
@@ -20,6 +21,7 @@
 
         public static void Main()
         {
+            System.Console.WriteLine(GetSalesWithAppliedDiscount(new CarDealerContext()));
         }
 
         public static string ImportSuppliers(CarDealerContext context, string inputXml)
@@ -303,6 +305,38 @@
                 namespaces.Add("", "");
 
                 serializer.Serialize(writer, customers, namespaces);
+            }
+
+            return sb.ToString().Trim();
+        }
+
+        public static string GetSalesWithAppliedDiscount(CarDealerContext context)
+        {
+            ConfigureMapper();
+
+            var sales = context
+                .Sales
+                .Select(s => new ExportSaleWithAppliedDiscountDto()
+                {
+                    Car = mapper.Map<ExportCarWithAttributeDto>(s.Car),
+                    Discount = s.Discount,
+                    CustomerName = s.Customer.Name,
+                    Price = s.Car.PartCars.Sum(p => p.Part.Price),
+                    PriceWithDiscount = s.Car.PartCars.Sum(p => p.Part.Price) - s.Car.PartCars.Sum(p => p.Part.Price) * s.Discount / 100
+                })
+                .ToArray();
+
+
+            var sb = new StringBuilder();
+
+            using (var writer = new StringWriter(sb))
+            {
+                var serializer = new XmlSerializer(typeof(ExportSaleWithAppliedDiscountDto[]), new XmlRootAttribute("sales"));
+
+                var namespaces = new XmlSerializerNamespaces();
+                namespaces.Add("", "");
+
+                serializer.Serialize(writer, sales, namespaces);
             }
 
             return sb.ToString().Trim();

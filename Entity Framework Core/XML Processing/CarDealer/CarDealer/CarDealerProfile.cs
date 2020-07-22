@@ -5,7 +5,6 @@
     using Models;
 
     using AutoMapper;
-    using System.Linq;
 
     public class CarDealerProfile : Profile
     {
@@ -25,6 +24,8 @@
 
             this.CreateMap<Supplier, ExportLocalSupplierDto>()
                 .ForMember(x => x.PartsCount, y => y.MapFrom(x => x.Parts.Count));
+
+            this.CreateMap<Car, ExportCarWithAttributeDto>();
         }
     }
 }
