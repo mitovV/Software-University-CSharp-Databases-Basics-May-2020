@@ -5,6 +5,7 @@
     using Models;
 
     using AutoMapper;
+    using System.Linq;
 
     public class CarDealerProfile : Profile
     {

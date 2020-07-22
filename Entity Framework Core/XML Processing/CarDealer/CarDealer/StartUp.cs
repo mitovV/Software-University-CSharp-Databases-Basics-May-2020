@@ -222,7 +222,7 @@
             var suppliers = context
                 .Suppliers
                 .Where(s => !s.IsImporter)
-               .ProjectTo<ExportLocalSupplierDto>(mapper.ConfigurationProvider)
+                .ProjectTo<ExportLocalSupplierDto>(mapper.ConfigurationProvider)
                 .ToArray();
 
 
@@ -236,6 +236,43 @@
                 namespaces.Add("", "");
 
                 serializer.Serialize(writer, suppliers, namespaces);
+            }
+
+            return sb.ToString().Trim();
+        }
+
+        public static string GetCarsWithTheirListOfParts(CarDealerContext context)
+        {
+            var cars = context
+                .Cars
+                .Select(c => new ExportCarWithPartDto()
+                {
+                    Make = c.Make,
+                    Model = c.Model,
+                    TravelledDistance = c.TravelledDistance,
+                    Parts = c.PartCars.Select(pc => new ExportPartDto()
+                    {
+                        Name = pc.Part.Name,
+                        Price = pc.Part.Price
+                    })
+                    .OrderByDescending(p => p.Price)
+                    .ToArray()
+                })
+                .OrderByDescending(c => c.TravelledDistance)
+                .ThenBy(c => c.Model)
+                .Take(5)
+                .ToArray();
+
+            var sb = new StringBuilder();
+
+            using (var writer = new StringWriter(sb))
+            {
+                var serializer = new XmlSerializer(typeof(ExportCarWithPartDto[]), new XmlRootAttribute("cars"));
+
+                var namespaces = new XmlSerializerNamespaces();
+                namespaces.Add("", "");
+
+                serializer.Serialize(writer, cars, namespaces);
             }
 
             return sb.ToString().Trim();
