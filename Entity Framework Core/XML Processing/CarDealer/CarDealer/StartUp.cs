@@ -21,7 +21,6 @@
 
         public static void Main()
         {
-            System.Console.WriteLine(GetSalesWithAppliedDiscount(new CarDealerContext()));
         }
 
         public static string ImportSuppliers(CarDealerContext context, string inputXml)
