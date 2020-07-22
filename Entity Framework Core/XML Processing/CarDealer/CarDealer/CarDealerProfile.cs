@@ -21,6 +21,9 @@
             this.CreateMap<Car, ExportCarDto>();
 
             this.CreateMap<Car, ExportCarFromMakeBmwDto>();
+
+            this.CreateMap<Supplier, ExportLocalSupplierDto>()
+                .ForMember(x => x.PartsCount, y => y.MapFrom(x => x.Parts.Count));
         }
     }
 }

@@ -215,6 +215,32 @@
             return sb.ToString().Trim();
         }
 
+        public static string GetLocalSuppliers(CarDealerContext context)
+        {
+            ConfigureMapper();
+
+            var suppliers = context
+                .Suppliers
+                .Where(s => !s.IsImporter)
+               .ProjectTo<ExportLocalSupplierDto>(mapper.ConfigurationProvider)
+                .ToArray();
+
+
+            var sb = new StringBuilder();
+
+            using (var writer = new StringWriter(sb))
+            {
+                var serializer = new XmlSerializer(typeof(ExportLocalSupplierDto[]), new XmlRootAttribute("suppliers"));
+
+                var namespaces = new XmlSerializerNamespaces();
+                namespaces.Add("", "");
+
+                serializer.Serialize(writer, suppliers, namespaces);
+            }
+
+            return sb.ToString().Trim();
+        }
+
         private static void ConfigureMapper()
         {
             var config = new MapperConfiguration(cfg =>
